@@ -14,4 +14,5 @@ Outstanding tasks
 - map rendering
 - resetting bots list
 - deploying static energy pods every N ticks at random
-
+- inform a bot when trying to connect to a running game
+- add CLI args to client and command center enter the server IP
