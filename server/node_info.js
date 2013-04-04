@@ -8,6 +8,7 @@ module.exports = function(name) {
   self.name   = name;
   self.x      = null;
   self.y      = null;
+  self.old    = 
   self.energy = null;
   self.score  = 0;
   self.dead   = false;
