@@ -8,8 +8,6 @@ module.exports = function() {
     var collidedNodes = [],
         positions = {};
 
-    nodes = _.filter(nodes, function(n){ return !n.dead });
-
     positions = _.groupBy(nodes, function(n){
       return JSON.stringify({x: n.x, y: n.y});
     });
@@ -24,21 +22,20 @@ module.exports = function() {
 
 
   self.move = function(gameState) {
-    var collidedNodes = [];
+    var collidedNodes = [],
+        nodes = gameState.liveNodes();
 
-    gameState.eachNode(function(n){
+    _.each(nodes, function(n){
       self.moveNode(n, gameState.fieldWidth, gameState.fieldHeight);
     });
 
     do {
-      collidedNodes = getCollisions(gameState.nodes);
+      collidedNodes = getCollisions(nodes);
       _.each(collidedNodes, function(n){ self.resetPosition(n); });
     } while(collidedNodes.length > 0)
   }
 
   self.moveNode = function(n, fieldWidth, fieldHeight){
-    if (n.dead) return;
-
     prevPositions[n.name] = {x: n.x, y: n.y};
 
     switch (n.tickMove) {

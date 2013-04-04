@@ -58,7 +58,7 @@ module.exports = function() {
   }
 
   var exchangeEnergy = function(gameState) {
-    var sorted = _.toArray(gameState.nodes);
+    var sorted = _.toArray(gameState.liveNodes());
 
     sorted = _.sortBy(sorted, function(n) { return -n.energy; });
 

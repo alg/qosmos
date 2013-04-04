@@ -1,13 +1,17 @@
 module.exports = function(fieldWidth, fieldHeight) {
-
   var self     = this,
       NodeInfo = require('./node_info'),
-      nodes    = {};
+      nodes    = {},
+      _        = require('../lib/underscore');
 
   self.phase       = 'idle';
   self.fieldWidth  = fieldWidth;
   self.fieldHeight = fieldHeight;
   self.nodes       = nodes;
+
+  self.liveNodes = function(){
+    return _.filter(self.nodes, function(n){ return !n.dead });
+  }
 
   // add a node
   self.join = function(nodeName, name) {
