@@ -6,5 +6,8 @@ module.exports = {
 
   fieldWidth:  10,
   fieldHeight: 10,
-  tickInterval: 500
+  tickInterval: 200,
+
+  // energy to suck from the weaker
+  energyPack: 5
 }

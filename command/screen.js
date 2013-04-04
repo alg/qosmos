@@ -5,7 +5,7 @@ var cellWidth    = 4,
     cellHeight   = 2,
     cellPadding  = 1,
     fieldOffsetX = 1,
-    fieldOffsetY = 7;
+    fieldOffsetY = 9;
 
 function lf() { return '\n' }
 function clearScreen() {

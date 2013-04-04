@@ -1,10 +1,12 @@
+var gx = 2;
+
 function getPlacementPosition(map, fw, fh) {
   var found = false,
       x, y;
 
   while (!found) {
-    x = Math.floor(Math.random() * fw);
-    y = Math.floor(Math.random() * fh);
+    x = gx; //Math.floor(Math.random() * 4); // fw
+    y = 2; //Math.floor(Math.random() * 4); // fh
 
     if (!map[y * fw + x]) {
       map[y * fw + x] = true;
@@ -12,6 +14,8 @@ function getPlacementPosition(map, fw, fh) {
     }
   }
 
+
+  gx += 1;
   return { x: x, y: y };
 }
 
@@ -26,7 +30,7 @@ module.exports = function() {
 
       nodeInfo.x = pos.x;
       nodeInfo.y = pos.y;
-      nodeInfo.energy = 100;
+      nodeInfo.energy = 100 * Math.floor(Math.random() * 5 + 1) * 5;
       nodeInfo.dead = false;
     });
   }
@@ -36,7 +40,6 @@ module.exports = function() {
     if (tick > 0) {
       moveNodes(gameState);
       exchangeEnergy(gameState);
-      dieNodes(gameState);
 
       if (tick % 10) {
         deployEnergy(gameState);
@@ -70,12 +73,25 @@ module.exports = function() {
   }
 
   var exchangeEnergy = function(gameState) {
-    gameState.eachNode(function(n) {
-      n.decreaseEnergy();
-    });
+    var _ = require('../lib/underscore'),
+        sorted = _.toArray(gameState.nodes);
+
+    sorted = _.sortBy(sorted, function(n) { return -n.energy; });
+
+    for (var i = 0; i < sorted.length; i++) {
+      var node = sorted[i];
+
+      for (var j = i + 1; j < sorted.length; j++) {
+        var other = sorted[j];
+
+        if (other.closeTo(node) && other.energy < node.energy) {
+          console.log('take energy');
+          node.takesEnergyOf(other);
+        }
+      }
+    }
   }
 
-  var dieNodes = function(gameState) {}
   var deployEnergy = function(gameState) {}
 
   return self;
