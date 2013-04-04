@@ -1,7 +1,7 @@
 module.exports = {
   commandCenterPort: 41412,
   gameServerPort: 41414,
-  multicastHost: '224.0.0.14',
+  multicastHost: '224.0.0.',
   multicastPort: 41413,
 
   fieldWidth:  10,
