@@ -1,7 +1,7 @@
 var ansi = require('ansi'),
     c = ansi(process.stdout);
 
-var cellWidth    = 3,
+var cellWidth    = 4,
     cellHeight   = 2,
     cellPadding  = 1,
     fieldOffsetX = 1,
@@ -35,7 +35,7 @@ module.exports = function(delegate) {
   }
 
   var renderField = function(state) {
-    var p = '   ';
+    var p = '    ';
 
     var fh = state.field.h, fw = state.field.w;
 
@@ -63,7 +63,9 @@ module.exports = function(delegate) {
             y = fieldOffsetY + node.y * (cellHeight + cellPadding);
 
         c.goto(x, y);
-        process.stdout.write('   ');
+        process.stdout.write('    ');
+        c.goto(x, y + 1);
+        process.stdout.write('    ');
         c.goto(x, y + 1);
         process.stdout.write(String(node.e));
       }
