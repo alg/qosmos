@@ -8,11 +8,7 @@ Outstanding tasks
 -----------------
 
 - collision detection
-- reducing energy (when two bots sit next to each other,
-  the one with more energy sucks the energy out of the weaker one)
-- winning conditions
 - scoring (bot gets a score point for each bot it outlived)
-- map rendering
 - resetting bots list
 - deploying static energy pods every N ticks at random
 - inform a bot when trying to connect to a running game
