@@ -56,7 +56,7 @@ module.exports = function(net) {
 
   // stop game
   self.stop = function() {
-    if (phase = runningPhase) {
+    if (phase == runningPhase) {
       if (tickTimer) {
         clearTimeout(tickTimer);
         tickTimer = null;
