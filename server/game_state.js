@@ -24,7 +24,11 @@ module.exports = function(fieldWidth, fieldHeight) {
 
   // checks if the game is over
   self.isGameOver = function() {
-    return false;
+    for (var i in nodes) {
+      var node = nodes[i];
+      if (!node.dead) return false;
+    }
+    return true;
   }
 
   // returns this round scores

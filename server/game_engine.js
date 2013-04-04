@@ -27,6 +27,7 @@ module.exports = function() {
       nodeInfo.x = pos.x;
       nodeInfo.y = pos.y;
       nodeInfo.energy = 100;
+      nodeInfo.dead = false;
     });
   }
 
@@ -68,7 +69,12 @@ module.exports = function() {
     });
   }
 
-  var exchangeEnergy = function(gameState) {}
+  var exchangeEnergy = function(gameState) {
+    gameState.eachNode(function(n) {
+      n.decreaseEnergy();
+    });
+  }
+
   var dieNodes = function(gameState) {}
   var deployEnergy = function(gameState) {}
 
