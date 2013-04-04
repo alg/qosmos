@@ -31,7 +31,6 @@ module.exports = function(delegate) {
 
   var renderDash = function(state) {
     console.log("[1] Start [2] Stop [Q] Quit\n")
-    console.log(state);
   }
 
   var renderField = function(state) {
