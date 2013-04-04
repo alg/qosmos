@@ -1,12 +1,10 @@
-var gx = 2;
-
 function getPlacementPosition(map, fw, fh) {
   var found = false,
       x, y;
 
   while (!found) {
-    x = gx; //Math.floor(Math.random() * 4); // fw
-    y = 2; //Math.floor(Math.random() * 4); // fh
+    x = Math.floor(Math.random() * fw);
+    y = Math.floor(Math.random() * fh);
 
     if (!map[y * fw + x]) {
       map[y * fw + x] = true;
