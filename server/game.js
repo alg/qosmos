@@ -29,11 +29,12 @@ module.exports = function(net) {
   var tick = function() {
     gameEngine.process(gameState, tickCount);
 
+    self.broadcastState();
+
     if (gameState.isGameOver()) {
       phase = idlePhase;
       net.broadcast({ e: 'game_over', scores: gameState.scores(), ticks: tickCount });
     } else {
-      self.broadcastState();
       tickCount++;
       tickTimer = setTimeout(tick, tickInterval);
     }
