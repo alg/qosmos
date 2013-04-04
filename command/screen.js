@@ -1,12 +1,19 @@
-require('coffee-script');
+var ansi = require('ansi');
+
+function lf() { return '\n' }
+function clearScreen() {
+  ansi(process.stdout)
+    .write(Array.apply(null, Array(process.stdout.getWindowSize()[1])).map(lf).join(''))
+    .eraseData(2)
+    .goto(1, 1);
+}
 
 // renders the screen contents and delegates commands
 module.exports = function(delegate) {
   var self = this;
-      // TermUI = require('node-term-ui');
 
   self.render = function(state) {
-    // TermUI.clear();
+    clearScreen();
 
     renderDash(state);
     renderField(state);
@@ -14,7 +21,7 @@ module.exports = function(delegate) {
   }
 
   var renderDash = function(state) {
-    // TermUI.pos(1,1).fg(TermUI.C.w).out("Hello, world!");
+    console.log("[1] Start [2] Stop [Q] Quit\n")
     console.log(state);
   }
 

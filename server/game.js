@@ -66,6 +66,7 @@ module.exports = function(net) {
       gameState.phase = 'idle';
 
       net.broadcast({ e: 'game_stopped', ticks: tickCount });
+      self.broadcastState();
     }
   }
 

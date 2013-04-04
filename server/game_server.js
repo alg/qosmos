@@ -84,6 +84,10 @@ module.exports = function() {
         commandSocket.send(buf, 0, buf.length, rinfo.port, rinfo.address);
       } else if (json.c == 'state') {
         game.broadcastState();
+      } else if (json.c == 'start') {
+        game.start();
+      } else if (json.c == 'stop') {
+        game.stop();
       }
     });
 

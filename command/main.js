@@ -27,8 +27,6 @@ sendSocket.on('message', function(msg, rinfo) {
 
 // listening to broadcasts
 recvSocket.on('message', function(msg, rinfo) {
-  console.log("Got broadcast: " + msg);
-
   var json = JSON.parse(msg);
   if (json.state) {
     screen.render(json.state);
@@ -43,3 +41,26 @@ sendSocket.on("listening", function() {
 });
 sendSocket.bind();
 
+process.stdin.resume();
+process.stdin.setRawMode(true);
+process.stdin.on('data', function(d) {
+  switch (d.toString().toLowerCase()[0]) {
+    case 'q':
+      process.stdin.setRawMode(false);
+      process.stdin.pause();
+      process.exit(1);
+      break;
+
+    case '1':
+      commands.start();
+      break;
+
+    case '2':
+      commands.stop();
+      break;
+
+    case ' ':
+      commands.state();
+      break
+  }
+});
