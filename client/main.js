@@ -16,6 +16,19 @@ var dgram = require('dgram'),
 var sendSocket = dgram.createSocket("udp4"),
     recvSocket = dgram.createSocket("udp4");
 
+var myName = 'tester-' + new Date().getTime();
+
+function findNode(nodes) {
+  if (!nodes) return null;
+
+  for (var i = 0; i < nodes.length; i++) {
+    var node = nodes[i];
+    if (node.name == myName) return node;
+  }
+
+  return null;
+}
+
 sendSocket.on('message', function(msg, rinfo) {
   console.log("Got direct: " + msg);
 
@@ -31,6 +44,9 @@ sendSocket.on('message', function(msg, rinfo) {
   });
 });
 
+var offsets = [ 'move_right', 'move_down', 'move_left', 'move_up' ],
+    step = 0;
+
 // listening to broadcasts
 recvSocket.on('message', function(msg, rinfo) {
   console.log("Got broadcast: " + msg);
@@ -38,13 +54,19 @@ recvSocket.on('message', function(msg, rinfo) {
   var json = JSON.parse(msg),
       state = json.state;
 
-  if (state) {
+  if (json.e == 'game_started') {
+    xo = 1;
+    yo = 0;
+  } else if (state) {
     if (state.phase == 'idle') {
       //
     } else if (state.phase == 'running') {
       // take state, analyze, return command for this round
 
-      sendCommand({ c: 'move_left' });
+      var myNode = findNode(state.nodes);
+
+      sendCommand({ c: offsets[step % offsets.length] });
+      step++;
     }
   }
 });
@@ -62,7 +84,7 @@ sendSocket.on("listening", function() {
   console.log("Send socket at:  " + address.address + ":" + address.port);
 
   // send JOIN to the server
-  sendCommand({c: 'join', name: 'tester-' + new Date().getTime() });
+  sendCommand({c: 'join', name: myName });
 });
 
 sendSocket.bind();
