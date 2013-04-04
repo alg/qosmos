@@ -65,7 +65,8 @@ recvSocket.on('message', function(msg, rinfo) {
 
       var myNode = findNode(state.nodes);
 
-      sendCommand({ c: offsets[Math.round(Math.random() * 4)]});
+      sendCommand({ c: offsets[Math.round(Math.random() * offsets.length)]});
+      // sendCommand({ c: 'move_left'});
       step++;
     }
   }

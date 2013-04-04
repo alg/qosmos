@@ -1,3 +1,6 @@
+var gx = 2,
+    _ = require('../lib/underscore');
+
 function getPlacementPosition(map, fw, fh) {
   var found = false,
       x, y;
@@ -18,7 +21,9 @@ function getPlacementPosition(map, fw, fh) {
 }
 
 module.exports = function() {
-  var self = this;
+  var self = this,
+      Mover = require('./mover'),
+      mover = new Mover();
 
   // initializes for the new round
   self.newRound = function(gameState) {
@@ -46,51 +51,14 @@ module.exports = function() {
   }
 
   var moveNodes = function(gameState) {
-    var nodes = gameState.serialize.nodes;
-
-    gameState.eachNode(function(n) {
-      if (n.dead) return;
-
-      switch (n.tickMove) {
-        case 'move_left':
-          if (n.x > 0) n.move_left();
-          break;
-
-        case 'move_down':
-          if (n.y < gameState.fieldHeight - 1) n.move_down();
-          break;
-
-        case 'move_up':
-          if (n.y > 0) n.move_up();
-          break;
-
-        case 'move_right':
-          if (n.x < gameState.fieldWidth - 1) n.move_right();
-          break;
-      }
-    });
-
-    // do {
-    //   var collision_nodes = gameState.getCollisons();
-    //   for(var i in collision_nodes){
-    //     collision_nodes[i].x = collision_nodes[i].old.x
-    //     collision_nodes[i].y = collision_nodes[i].old.y
-    //   }
-    // } while(collision_nodes.length > 0)
-
-    // check: if two nodes in one position
-    // move them back
-    // goto check
-    // or
-    // proceed
+    mover.move(gameState);
 
     // reset moves
     gameState.eachNode(function(n) { n.tickMove = null; });
   }
 
   var exchangeEnergy = function(gameState) {
-    var _ = require('../lib/underscore'),
-        sorted = _.toArray(gameState.nodes);
+    var sorted = _.toArray(gameState.nodes);
 
     sorted = _.sortBy(sorted, function(n) { return -n.energy; });
 
