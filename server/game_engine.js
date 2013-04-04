@@ -1,3 +1,6 @@
+var gx = 2,
+    _ = require('../lib/underscore');
+
 function getPlacementPosition(map, fw, fh) {
   var found = false,
       x, y;
@@ -18,7 +21,9 @@ function getPlacementPosition(map, fw, fh) {
 }
 
 module.exports = function() {
-  var self = this;
+  var self = this,
+      Mover = require('./mover'),
+      mover = new Mover();
 
   // initializes for the new round
   self.newRound = function(gameState) {
@@ -46,35 +51,14 @@ module.exports = function() {
   }
 
   var moveNodes = function(gameState) {
-    gameState.eachNode(function(n) {
-      if (n.dead) return;
+    mover.move(gameState);
 
-      switch (n.tickMove) {
-        case 'move_left':
-          if (n.x > 0) n.x--;
-          break;
-
-        case 'move_down':
-          if (n.y < gameState.fieldHeight - 1) n.y++;
-          break;
-
-        case 'move_up':
-          if (n.y > 0) n.y--;
-          break;
-
-        case 'move_right':
-          if (n.x < gameState.fieldWidth - 1) n.x++;
-          break;
-      }
-
-      // reset moves
-      n.tickMove = null;
-    });
+    // reset moves
+    gameState.eachNode(function(n) { n.tickMove = null; });
   }
 
   var exchangeEnergy = function(gameState) {
-    var _ = require('../lib/underscore'),
-        sorted = _.toArray(gameState.nodes);
+    var sorted = _.toArray(gameState.liveNodes());
 
     sorted = _.sortBy(sorted, function(n) { return -n.energy; });
 
