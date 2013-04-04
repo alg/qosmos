@@ -42,7 +42,7 @@ module.exports = function(net) {
   // start game (joins will be disallowed)
   self.start = function() {
     if (phase == idlePhase) {
-      gameState.resetOnStart();
+      gameEngine.newRound(gameState);
 
       phase = runningPhase;
       gameState.phase = 'running';

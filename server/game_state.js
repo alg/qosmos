@@ -4,7 +4,9 @@ module.exports = function(fieldWidth, fieldHeight) {
       NodeInfo = require('./node_info'),
       nodes    = {};
 
-  self.phase = 'idle';
+  self.phase       = 'idle';
+  self.fieldWidth  = fieldWidth;
+  self.fieldHeight = fieldHeight;
 
   // add a node
   self.join = function(nodeName, name) {
@@ -35,18 +37,20 @@ module.exports = function(fieldWidth, fieldHeight) {
     if (node) node.tickMove = move;
   }
 
+  self.eachNode = function(cb) {
+    for (var i in nodes) cb(nodes[i]);
+  }
+
   self.serialize = function() {
     var nodeInfos = [];
-    for (var i in nodes) {
-      var node = nodes[i];
-      console.log(node);
+    self.eachNode(function(node) {
       nodeInfos.push({
         n: node.name,
         x: node.x,
         y: node.y,
         e: node.energy,
         s: node.score });
-    }
+    });
 
     return {
       phase: self.phase,
