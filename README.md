@@ -21,13 +21,13 @@ Outstanding tasks
 Starting server
 ---------------
 
-$ node server/main.js
+    $ node server/main.js
 
 
 Connecting with the sample bot
 ------------------------------
 
-$ node client/main.js
+    $ node client/main.js
 
 (server must be running)
 
@@ -35,6 +35,6 @@ $ node client/main.js
 Connecting with console
 -----------------------
 
-$ node command/main.js
+    $ node command/main.js
 
 (server must be running)
