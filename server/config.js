@@ -6,5 +6,5 @@ module.exports = {
 
   fieldWidth:  10,
   fieldHeight: 10,
-  tickInterval: 1000
+  tickInterval: 500
 }
