@@ -47,6 +47,8 @@ module.exports = function() {
 
   var moveNodes = function(gameState) {
     gameState.eachNode(function(n) {
+      if (n.dead) return;
+
       switch (n.tickMove) {
         case 'move_left':
           if (n.x > 0) n.x--;
