@@ -4,6 +4,7 @@ module.exports = {
   multicastHost: '224.0.0.14',
   multicastPort: 41413,
 
-  fieldWidth: 100,
-  fieldHeight: 100
+  fieldWidth:  10,
+  fieldHeight: 10,
+  tickInterval: 1000
 }

@@ -22,7 +22,7 @@ module.exports = function(net) {
   }
 
   var tickTimer    = null,
-      tickInterval = 1000,
+      tickInterval = Config.tickInterval,
       tickCount    = 0;
 
   // single game tick
