@@ -51,7 +51,7 @@ module.exports = function() {
           break;
 
         case 'move_down':
-          if (n.y < gameState.fieldHeight) n.y++;
+          if (n.y < gameState.fieldHeight - 1) n.y++;
           break;
 
         case 'move_up':
@@ -59,7 +59,7 @@ module.exports = function() {
           break;
 
         case 'move_right':
-          if (n.x < gameState.fieldWidth) n.x++;
+          if (n.x < gameState.fieldWidth - 1) n.x++;
           break;
       }
 
