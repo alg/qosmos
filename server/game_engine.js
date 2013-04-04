@@ -43,7 +43,31 @@ module.exports = function() {
     }
   }
 
-  var moveNodes = function(gameState) {}
+  var moveNodes = function(gameState) {
+    gameState.eachNode(function(n) {
+      switch (n.tickMove) {
+        case 'move_left':
+          if (n.x > 0) n.x--;
+          break;
+
+        case 'move_down':
+          if (n.y < gameState.fieldHeight) n.y++;
+          break;
+
+        case 'move_up':
+          if (n.y > 0) n.y--;
+          break;
+
+        case 'move_right':
+          if (n.x < gameState.fieldWidth) n.x++;
+          break;
+      }
+
+      // reset moves
+      n.tickMove = null;
+    });
+  }
+
   var exchangeEnergy = function(gameState) {}
   var dieNodes = function(gameState) {}
   var deployEnergy = function(gameState) {}
