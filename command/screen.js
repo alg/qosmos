@@ -25,6 +25,7 @@ module.exports = function(delegate) {
     renderDash(state);
     renderField(state);
     renderPlayers(state);
+    renderScoreboard(state);
 
     c.goto(1, 1);
   }
@@ -52,7 +53,6 @@ module.exports = function(delegate) {
   }
 
   var renderPlayers = function(state) {
-
     var nodes = state.nodes,
         offX  = fieldOffsetX + state.field.w * (cellPadding + cellWidth) + 10;
 
@@ -79,6 +79,24 @@ module.exports = function(delegate) {
     }
 
     c.bg.black();
+  }
+
+  var renderScoreboard = function(state) {
+    var _ = require('../lib/underscore');
+
+    var ordered = _.sortBy(state.nodes, function(n) { return -n.s; }),
+        offX    = fieldOffsetX + state.field.w * (cellPadding + cellWidth) + 10,
+        offY    = fieldOffsetY + state.nodes.length + 1;
+
+    for (var i = 0; i < ordered.length; i++) {
+      var node = ordered[i];
+
+      c.bg.black();
+      c.goto(offX, offY + i);
+      process.stdout.write(String(node.s));
+      c.goto(offX + 10, offY + i);
+      process.stdout.write(node.n);
+    }
   }
 
   return self;
