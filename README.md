@@ -2,6 +2,7 @@ Requirements
 ------------
 
 - node 0.10.1+
+- npm install ansi
 
 Outstanding tasks
 -----------------
