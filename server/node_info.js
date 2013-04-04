@@ -23,6 +23,8 @@ module.exports = function(name) {
 
   // true if two nodes are in close proximity
   self.closeTo = function(other) {
+    if (other.dead) return false;
+
     var xoff = self.x > other.x ? self.x - other.x : other.x - self.x,
         yoff = self.y > other.y ? self.y - other.y : other.y - self.y;
 
