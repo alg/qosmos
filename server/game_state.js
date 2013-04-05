@@ -8,10 +8,7 @@ module.exports = function(fieldWidth, fieldHeight) {
   self.fieldWidth  = fieldWidth;
   self.fieldHeight = fieldHeight;
   self.nodes       = nodes;
-
-  self.liveNodes = function(){
-    return _.filter(self.nodes, function(n){ return !n.dead });
-  }
+  self.liveNodes   = [];
 
   // add a node
   self.join = function(nodeName, name) {
@@ -21,10 +18,13 @@ module.exports = function(fieldWidth, fieldHeight) {
   }
 
   // prepare the state for a new game round
-  self.resetOnStart = function() {
-    // place nodes on the map
-    // reset energy
-    // reset scores
+  self.resetOnNewRound = function() {
+    self.liveNodes = _.toArray(nodes);
+  }
+
+  // remove the node from live
+  self.nodeHasDied = function(node) {
+    self.liveNodes = _.without(self.liveNodes.without, [ node ]);
   }
 
   // checks if the game is over

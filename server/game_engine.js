@@ -28,6 +28,7 @@ module.exports = function() {
   // initializes for the new round
   self.newRound = function(gameState) {
     var map = [];
+
     gameState.eachNode(function(nodeInfo) {
       var pos = getPlacementPosition(map, gameState.fieldWidth, gameState.fieldHeight);
 
@@ -36,6 +37,8 @@ module.exports = function() {
       nodeInfo.energy = 100 * Math.floor(Math.random() * 5 + 1) * 5;
       nodeInfo.dead = false;
     });
+
+    gameState.resetOnNewRound();
   }
 
   // processes current game state and makes all moves
@@ -58,9 +61,7 @@ module.exports = function() {
   }
 
   var exchangeEnergy = function(gameState) {
-    var sorted = _.toArray(gameState.liveNodes());
-
-    sorted = _.sortBy(sorted, function(n) { return -n.energy; });
+    var sorted = _.sortBy(gameState.liveNodes, function(n) { return -n.energy; });
 
     for (var i = 0; i < sorted.length; i++) {
       var node = sorted[i];
@@ -69,8 +70,10 @@ module.exports = function() {
         var other = sorted[j];
 
         if (other.closeTo(node) && other.energy < node.energy) {
-          console.log('take energy');
           node.takesEnergyOf(other);
+
+          // if died, mark as dead
+          if (other.dead) gameState.nodeHasDied(other);
         }
       }
     }
