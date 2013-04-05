@@ -31,6 +31,10 @@ Connecting with the sample bot
 
     $ node client/main.js
 
+    or
+
+    $ node client/random.js
+
 (server must be running)
 
 
