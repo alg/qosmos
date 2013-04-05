@@ -31,7 +31,7 @@ Connecting with the sample bot
 
     $ node client/main.js
 
-    or
+or
 
     $ node client/random.js
 
