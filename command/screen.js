@@ -3,7 +3,8 @@ var ansi = require('ansi'),
 
 var cellWidth    = 4,
     cellHeight   = 2,
-    cellPadding  = 1,
+    cellPaddingX = 2,
+    cellPaddingY = 1,
     fieldOffsetX = 1,
     fieldOffsetY = 3;
 
@@ -42,7 +43,7 @@ module.exports = function(delegate) {
     for (var y = 0; y < fh; y++) {
       for (var x = 0; x < fw; x++) {
         for (var l = 0; l < cellHeight; l++) {
-          c.goto(x * (cellWidth + cellPadding) + fieldOffsetX, y * (cellHeight + cellPadding) + fieldOffsetY + l);
+          c.goto(x * (cellWidth + cellPaddingX) + fieldOffsetX, y * (cellHeight + cellPaddingY) + fieldOffsetY + l);
           c.bg.grey();
           process.stdout.write(p);
         }
@@ -54,13 +55,13 @@ module.exports = function(delegate) {
 
   var renderPlayers = function(state) {
     var nodes = state.nodes,
-        offX  = fieldOffsetX + state.field.w * (cellPadding + cellWidth) + 10;
+        offX  = fieldOffsetX + state.field.w * (cellPaddingX + cellWidth) + 10;
 
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
       if (node.e > 0) {
-        var x = fieldOffsetX + node.x * (cellWidth + cellPadding),
-            y = fieldOffsetY + node.y * (cellHeight + cellPadding);
+        var x = fieldOffsetX + node.x * (cellWidth + cellPaddingX),
+            y = fieldOffsetY + node.y * (cellHeight + cellPaddingY);
 
         c.bg.green();
         c.goto(x, y);
@@ -85,7 +86,7 @@ module.exports = function(delegate) {
     var _ = require('../lib/underscore');
 
     var ordered = _.sortBy(state.nodes, function(n) { return -n.s; }),
-        offX    = fieldOffsetX + state.field.w * (cellPadding + cellWidth) + 10,
+        offX    = fieldOffsetX + state.field.w * (cellPaddingX + cellWidth) + 10,
         offY    = fieldOffsetY + state.nodes.length + 1;
 
     for (var i = 0; i < ordered.length; i++) {
