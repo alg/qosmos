@@ -8,10 +8,15 @@ Outstanding tasks
 -----------------
 
 - collision detection
-- scoring (bot gets a score point for each bot it outlived)
+- scoring
+  - bot gets a score point for each frag
+  - score persists between rounds
 - resetting bots list
+  - add PING - PONG and remove non-responding bots at
+    the beginning of the round
 - deploying static energy pods every N ticks at random
 - inform a bot when trying to connect to a running game
+  - make example bots wait for 'idle' state and rejoin
 - add CLI args to client and command center enter the server IP
 
 
