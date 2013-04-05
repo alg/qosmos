@@ -40,7 +40,7 @@ module.exports = function() {
   var initBroadcastSocket = function() {
     broadcastSocket.bind(Config.multicastPort);
     broadcastSocket.on('listening', function() {
-      console.log("Broadcasting to: " + Config.multicastHost + ":" + Config.multicastPort);
+      console.log("Broadcasting to:   " + Config.multicastHost + ":" + Config.multicastPort);
       broadcastSocket.setBroadcast(true);
       broadcastSocket.setMulticastTTL(128);
       broadcastSocket.addMembership(Config.multicastHost);
@@ -62,7 +62,7 @@ module.exports = function() {
     // display connection information on init
     server.on("listening", function() {
       var address = server.address();
-      console.log("Game server at:  " + address.address + ":" + address.port);
+      console.log("Game server at:    " + address.port);
     });
 
     server.bind(Config.gameServerPort);
@@ -71,7 +71,7 @@ module.exports = function() {
   var initCommandCenterSocket = function() {
     commandSocket.on("listening", function() {
       var address = commandSocket.address();
-      console.log("Command center at: " + address.address + ":" + address.port);
+      console.log("Command center at: " + address.port);
     });
 
     commandSocket.on("message", function(msg, rinfo) {
