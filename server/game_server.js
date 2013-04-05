@@ -18,7 +18,7 @@ module.exports = function() {
 
   self.broadcast = function(m) {
     var msg = JSON.stringify(m);
-    console.log('Broadcast: ' + msg);
+    // console.log('Broadcast: ' + msg);
 
     var buf = new Buffer(msg);
     broadcastSocket.send(buf, 0, buf.length, Config.multicastPort, Config.multicastHost);
@@ -28,7 +28,7 @@ module.exports = function() {
     var msg = JSON.stringify(m),
         buf = new Buffer(msg);
 
-    console.log('Direct: ' + msg + ' to ' + nodeName);
+    // console.log('Direct: ' + msg + ' to ' + nodeName);
 
     var p = nodeName.match(/^(.*):(.*)$/),
         host = p[1],
