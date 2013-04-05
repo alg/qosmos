@@ -7,10 +7,6 @@ Requirements
 Outstanding tasks
 -----------------
 
-- scoring
-  - bot gets a score point for each frag
-  - score persists between rounds
-
 - resetting bots list
   - add PING - PONG and remove non-responding bots at
     the beginning of the round
