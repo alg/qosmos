@@ -16,9 +16,17 @@ module.exports = function(name) {
   // cleared on every tick.
   self.tickMove = null;
 
+  // Takes out amount of energy.
+  // Returns TRUE if died as the result.
   self.decreaseEnergy = function(amt) {
+    // can't die twice
+    if (self.dead) return false;
+
     self.energy = Math.max(0, self.energy - amt);
+
     if (self.energy == 0) self.dead = true;
+
+    return self.dead;
   }
 
   // true if two nodes are in close proximity
@@ -34,7 +42,12 @@ module.exports = function(name) {
   // transfers energy from one node to another
   self.takesEnergyOf = function(other) {
     self.energy += pack;
-    other.decreaseEnergy(pack);
+    return other.decreaseEnergy(pack);
+  }
+
+  // scores a point
+  self.scorePoint = function() {
+    self.score++;
   }
 
   return self;

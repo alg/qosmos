@@ -60,20 +60,24 @@ module.exports = function() {
     gameState.eachNode(function(n) { n.tickMove = null; });
   }
 
+  // exchange energies and award points for kills
   var exchangeEnergy = function(gameState) {
     var sorted = _.sortBy(gameState.liveNodes, function(n) { return -n.energy; });
 
     for (var i = 0; i < sorted.length; i++) {
       var node = sorted[i];
+      if (node.dead) continue;
 
       for (var j = i + 1; j < sorted.length; j++) {
         var other = sorted[j];
 
         if (other.closeTo(node) && other.energy < node.energy) {
-          node.takesEnergyOf(other);
+          if (node.takesEnergyOf(other)) {
+            // if died, mark as dead
+            gameState.nodeHasDied(other);
 
-          // if died, mark as dead
-          if (other.dead) gameState.nodeHasDied(other);
+            node.scorePoint();
+          }
         }
       }
     }
