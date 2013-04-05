@@ -7,7 +7,6 @@ Requirements
 Outstanding tasks
 -----------------
 
-- collision detection
 - scoring
   - bot gets a score point for each frag
   - score persists between rounds
