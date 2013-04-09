@@ -1,39 +1,39 @@
 module.exports = function(fieldWidth, fieldHeight) {
-  var self     = this,
-      NodeInfo = require('./node_info'),
-      nodes    = {},
-      _        = require('../lib/underscore');
+  var self    = this,
+      Player  = require('./player'),
+      players = {},
+      _       = require('../lib/underscore');
 
   self.phase       = 'idle';
   self.fieldWidth  = fieldWidth;
   self.fieldHeight = fieldHeight;
-  self.nodes       = nodes;
-  self.liveNodes   = [];
+  self.players     = players;
+  self.livePlayers = [];
 
-  // add a node
+  // add a player
   self.join = function(nodeName, name) {
-    var newNode = !nodes[nodeName];
-    nodes[nodeName] = new NodeInfo(name);
-    return newNode;
+    var newPlayer = !players[nodeName];
+    players[nodeName] = new Player(name);
+    return newPlayer;
   }
 
   // prepare the state for a new game round
   self.resetOnNewRound = function() {
-    self.liveNodes = _.toArray(nodes);
+    self.livePlayers = _.toArray(players);
   }
 
-  // remove the node from live
-  self.nodeHasDied = function(node) {
-    self.liveNodes = _.without(self.liveNodes.without, [ node ]);
+  // remove the player from live list
+  self.playerHasDied = function(player) {
+    self.livePlayers = _.without(self.livePlayers.without, [ player ]);
   }
 
   // checks if the game is over
   self.isGameOver = function() {
     var nd = 0;
 
-    for (var i in nodes) {
-      var node = nodes[i];
-      if (!node.dead) {
+    for (var i in players) {
+      var player = players[i];
+      if (!player.dead) {
         nd++;
         if (nd > 1) return false;
       }
@@ -47,29 +47,29 @@ module.exports = function(fieldWidth, fieldHeight) {
   }
 
   self.setTickMove = function(nodeName, move) {
-    var node = nodes[nodeName];
-    if (node) node.tickMove = move;
+    var player = players[nodeName];
+    if (player) player.tickMove = move;
   }
 
-  self.eachNode = function(cb) {
-    for (var i in nodes) cb(nodes[i]);
+  self.eachPlayer = function(cb) {
+    for (var i in players) cb(players[i]);
   }
 
   self.serialize = function() {
-    var nodeInfos = [];
-    self.eachNode(function(node) {
-      nodeInfos.push({
-        n: node.name,
-        x: node.x,
-        y: node.y,
-        e: node.energy,
-        s: node.score });
+    var playerInfos = [];
+    self.eachPlayer(function(player) {
+      playerInfos.push({
+        n: player.name,
+        x: player.x,
+        y: player.y,
+        e: player.energy,
+        s: player.score });
     });
 
     return {
       phase: self.phase,
       field: { w: fieldWidth, h: fieldHeight },
-      nodes: nodeInfos
+      players: playerInfos
     };
   }
 

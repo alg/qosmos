@@ -54,14 +54,14 @@ module.exports = function(delegate) {
   }
 
   var renderPlayers = function(state) {
-    var nodes = state.nodes,
+    var players = state.players,
         offX  = fieldOffsetX + state.field.w * (cellPaddingX + cellWidth) + 10;
 
-    for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i];
-      if (node.e > 0) {
-        var x = fieldOffsetX + node.x * (cellWidth + cellPaddingX),
-            y = fieldOffsetY + node.y * (cellHeight + cellPaddingY);
+    for (var i = 0; i < players.length; i++) {
+      var player = players[i];
+      if (player.e > 0) {
+        var x = fieldOffsetX + player.x * (cellWidth + cellPaddingX),
+            y = fieldOffsetY + player.y * (cellHeight + cellPaddingY);
 
         c.bg.green();
         c.goto(x, y);
@@ -69,14 +69,14 @@ module.exports = function(delegate) {
         c.goto(x, y + 1);
         process.stdout.write('    ');
         c.goto(x, y + 1);
-        process.stdout.write(String(node.e));
+        process.stdout.write(String(player.e));
       }
 
       c.bg.black();
       c.goto(offX, fieldOffsetY + i);
-      process.stdout.write(String(node.e));
+      process.stdout.write(String(player.e));
       c.goto(offX + 10, fieldOffsetY + i);
-      process.stdout.write(node.n);
+      process.stdout.write(player.n);
     }
 
     c.bg.black();
@@ -85,18 +85,18 @@ module.exports = function(delegate) {
   var renderScoreboard = function(state) {
     var _ = require('../lib/underscore');
 
-    var ordered = _.sortBy(state.nodes, function(n) { return -n.s; }),
+    var ordered = _.sortBy(state.players, function(n) { return -n.s; }),
         offX    = fieldOffsetX + state.field.w * (cellPaddingX + cellWidth) + 10,
-        offY    = fieldOffsetY + state.nodes.length + 1;
+        offY    = fieldOffsetY + state.players.length + 1;
 
     for (var i = 0; i < ordered.length; i++) {
-      var node = ordered[i];
+      var player = ordered[i];
 
       c.bg.black();
       c.goto(offX, offY + i);
-      process.stdout.write(String(node.s));
+      process.stdout.write(String(player.s));
       c.goto(offX + 10, offY + i);
-      process.stdout.write(node.n);
+      process.stdout.write(player.n);
     }
   }
 

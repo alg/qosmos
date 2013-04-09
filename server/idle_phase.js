@@ -9,7 +9,7 @@ module.exports = function() {
 
       // if it's a new node, notify others
       if (gameState.join(nodeName, json.name)) {
-        net.broadcast({ e: 'node_joined', name: json.name });
+        net.broadcast({ e: 'player_joined', name: json.name });
         game.broadcastState();
       }
 

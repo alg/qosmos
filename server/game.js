@@ -2,7 +2,6 @@ module.exports = function(net) {
 
   var self         = this,
       Config       = require('./config'),
-      NodeInfo     = require('./node_info'),
       GameState    = require('./game_state'),
       gameState    = new GameState(Config.fieldWidth, Config.fieldHeight),
       GameEngine   = require('./game_engine'),

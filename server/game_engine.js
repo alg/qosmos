@@ -29,13 +29,13 @@ module.exports = function() {
   self.newRound = function(gameState) {
     var map = [];
 
-    gameState.eachNode(function(nodeInfo) {
+    gameState.eachPlayer(function(playerInfo) {
       var pos = getPlacementPosition(map, gameState.fieldWidth, gameState.fieldHeight);
 
-      nodeInfo.x = pos.x;
-      nodeInfo.y = pos.y;
-      nodeInfo.energy = 100 * Math.floor(Math.random() * 5 + 1) * 5;
-      nodeInfo.dead = false;
+      playerInfo.x = pos.x;
+      playerInfo.y = pos.y;
+      playerInfo.energy = 100 * Math.floor(Math.random() * 5 + 1) * 5;
+      playerInfo.dead = false;
     });
 
     gameState.resetOnNewRound();
@@ -44,7 +44,7 @@ module.exports = function() {
   // processes current game state and makes all moves
   self.process = function(gameState, tick) {
     if (tick > 0) {
-      moveNodes(gameState);
+      movePlayers(gameState);
       exchangeEnergy(gameState);
 
       if (tick % 10) {
@@ -53,30 +53,30 @@ module.exports = function() {
     }
   }
 
-  var moveNodes = function(gameState) {
+  var movePlayers = function(gameState) {
     mover.move(gameState);
 
     // reset moves
-    gameState.eachNode(function(n) { n.tickMove = null; });
+    gameState.eachPlayer(function(n) { n.tickMove = null; });
   }
 
   // exchange energies and award points for kills
   var exchangeEnergy = function(gameState) {
-    var sorted = _.sortBy(gameState.liveNodes, function(n) { return -n.energy; });
+    var sorted = _.sortBy(gameState.livePlayers, function(n) { return -n.energy; });
 
     for (var i = 0; i < sorted.length; i++) {
-      var node = sorted[i];
-      if (node.dead) continue;
+      var player = sorted[i];
+      if (player.dead) continue;
 
       for (var j = i + 1; j < sorted.length; j++) {
         var other = sorted[j];
 
-        if (other.closeTo(node) && other.energy < node.energy) {
-          if (node.takesEnergyOf(other)) {
+        if (other.closeTo(player) && other.energy < player.energy) {
+          if (player.takesEnergyOf(other)) {
             // if died, mark as dead
-            gameState.nodeHasDied(other);
+            gameState.playerHasDied(other);
 
-            node.scorePoint();
+            player.scorePoint();
           }
         }
       }
