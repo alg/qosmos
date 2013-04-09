@@ -29,8 +29,6 @@ Outstanding tasks
   - add PING - PONG and remove non-responding bots at
     the beginning of the round
 
-- deploying static energy pods every N ticks at random
-
 - inform a bot when trying to connect to a running game
   - make example bots wait for 'idle' state and rejoin
 

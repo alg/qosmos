@@ -9,5 +9,11 @@ module.exports = {
   tickInterval: 200,
 
   // energy to suck from the weaker
-  energyPack: 5
+  energyDrain: 5,
+
+  // energy in refill pack
+  energyInPack: 10,
+
+  // ticks between deployments of energy packs
+  energyPackInterval: 15
 }

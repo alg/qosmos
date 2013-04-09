@@ -38,13 +38,17 @@ module.exports = function(delegate) {
   var renderField = function(state) {
     var p = '    ';
 
-    var fh = state.field.h, fw = state.field.w;
+    var fh = state.field.h, fw = state.field.w, ep = state.ep, epx = ep && ep.x, epy = ep && ep.y;
 
     for (var y = 0; y < fh; y++) {
       for (var x = 0; x < fw; x++) {
         for (var l = 0; l < cellHeight; l++) {
           c.goto(x * (cellWidth + cellPaddingX) + fieldOffsetX, y * (cellHeight + cellPaddingY) + fieldOffsetY + l);
-          c.bg.grey();
+          if (epx == x && epy == y) {
+            c.bg.blue();
+          } else {
+            c.bg.grey();
+          }
           process.stdout.write(p);
         }
       }

@@ -1,5 +1,6 @@
-var gx = 2,
-    _ = require('../lib/underscore');
+var Config     = require('./config'),
+    EnergyPack = require('./energy_pack'),
+    _          = require('../lib/underscore');
 
 function getPlacementPosition(map, fw, fh) {
   var found = false,
@@ -15,8 +16,6 @@ function getPlacementPosition(map, fw, fh) {
     }
   }
 
-
-  gx += 1;
   return { x: x, y: y };
 }
 
@@ -45,11 +44,10 @@ module.exports = function() {
   self.process = function(gameState, tick) {
     if (tick > 0) {
       movePlayers(gameState);
+      consumeEnergyPack(gameState);
       exchangeEnergy(gameState);
 
-      if (tick % 10) {
-        deployEnergy(gameState);
-      }
+      if (tick % Config.energyPackInterval == 0) deployEnergy(gameState);
     }
   }
 
@@ -58,6 +56,24 @@ module.exports = function() {
 
     // reset moves
     gameState.eachPlayer(function(n) { n.tickMove = null; });
+  }
+
+  // if someone steps on the energy pack, use it
+  var consumeEnergyPack = function(gameState) {
+    if (!gameState.energyPack) return;
+
+    var ep = gameState.energyPack,
+        epx = ep.x,
+        epy = ep.y,
+        livePlayers = gameState.livePlayers;
+
+    for (var i = 0; i < livePlayers.length; i++) {
+      var p = livePlayers[i];
+      if (p.x == epx && p.y == epy) {
+        p.consume(ep);
+        gameState.energyPack = null;
+      }
+    }
   }
 
   // exchange energies and award points for kills
@@ -83,7 +99,15 @@ module.exports = function() {
     }
   }
 
-  var deployEnergy = function(gameState) {}
+  var deployEnergy = function(gameState) {
+    if (!gameState.energyPack) {
+      var spot = gameState.getEmptySpot();
+
+      if (spot) {
+        gameState.energyPack = new EnergyPack(spot.x, spot.y, Config.energyInPack);
+      }
+    }
+  }
 
   return self;
 }
