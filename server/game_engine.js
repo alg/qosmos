@@ -33,7 +33,7 @@ module.exports = function() {
 
       playerInfo.x = pos.x;
       playerInfo.y = pos.y;
-      playerInfo.energy = 100 * Math.floor(Math.random() * 5 + 1) * 5;
+      playerInfo.energy = 100; // * Math.floor(Math.random() * 5 + 1) * 5;
       playerInfo.dead = false;
     });
 
