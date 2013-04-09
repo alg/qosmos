@@ -4,6 +4,24 @@ Requirements
 - node 0.10.1+
 - npm install ansi
 
+Rules
+-----
+
+- game field has known dimensions
+- bots are deployed to the game field in random spots
+- bots are controlled remotely by players' client applications
+- each bot has 100 points of energy
+- in the beginning of each game tick the state of the field is broadcast
+- bots have certain time (currently 300ms) to make a decision and send
+  a move command (up, down, left or right)
+- neighboring bots exchange energy in a way that the one with more
+  energy sucks 5 points of energy per game tick from the weaker one
+- you get score points for each kill
+- every now and then an energy pack is deployed
+- to collect energy pack you need to walk on it
+- the goal is to beat the rest
+
+
 Outstanding tasks
 -----------------
 
