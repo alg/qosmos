@@ -29,6 +29,10 @@ function findNode(nodes) {
   return null;
 }
 
+function random(max){
+  return Math.floor(Math.random() * max)
+}
+
 sendSocket.on('message', function(msg, rinfo) {
   console.log("Got direct: " + msg);
 
@@ -65,7 +69,7 @@ recvSocket.on('message', function(msg, rinfo) {
 
       var myNode = findNode(state.nodes);
 
-      sendCommand({ c: offsets[Math.round(Math.random() * offsets.length)]});
+      sendCommand({ c: offsets[ random(offsets.length) ] });
       // sendCommand({ c: 'move_left'});
       step++;
     }
