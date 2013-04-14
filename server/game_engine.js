@@ -47,7 +47,7 @@ module.exports = function() {
       consumeEnergyPack(gameState);
       exchangeEnergy(gameState);
 
-      if (tick % Config.energyPackInterval == 0) deployEnergy(gameState);
+      if (tick % Config.energyPackInterval == 0) handleEnergy(gameState);
     }
   }
 
@@ -99,12 +99,19 @@ module.exports = function() {
     }
   }
 
-  var deployEnergy = function(gameState) {
+  var handleEnergy = function(gameState) {
     if (!gameState.energyPack) {
       var spot = gameState.getEmptySpot();
 
       if (spot) {
         gameState.energyPack = new EnergyPack(spot.x, spot.y, Config.energyInPack);
+      }
+    } else {
+      var pack = gameState.energyPack;
+      pack.increaseAge();
+
+      if (pack.age >= Config.maxEnergyAge) {
+        gameState.energyPack = null;
       }
     }
   }

@@ -18,6 +18,7 @@ Rules
   energy sucks 5 points of energy per game tick from the weaker one
 - you get score points for each kill
 - every now and then an energy pack is deployed
+- and it expires in (fieldWidth + fieldHeight) ticks
 - to collect energy pack you need to walk on it
 - the goal is to beat the rest
 
